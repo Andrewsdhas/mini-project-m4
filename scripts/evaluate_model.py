@@ -17,4 +17,4 @@ predictions = model.predict(X)
 # Evaluate model performance
 accuracy = accuracy_score(y, predictions)
 print(f"Model Accuracy: {accuracy}")
-# print(accuracy)
+print(accuracy)
