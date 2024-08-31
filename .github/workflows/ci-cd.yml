@@ -65,4 +65,4 @@ jobs:
           docker pull andrewdhas/ml-ci-cd-project-fastapi:latest
           docker stop ml-container || true
           docker rm ml-container || true
-          docker run -d --name ml-container -p 80:80 andrewdhas/ml-ci-cd-project-fastapi:latest
+          docker run -d --name ml-container -p 8000:8000 andrewdhas/ml-ci-cd-project-fastapi:latest
