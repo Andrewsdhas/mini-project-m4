@@ -1,12 +1,10 @@
-name: CI/CD Pipeline
+name: CICD Pipeline for Model
 
 on:
   push:
     branches:
       - main
-      - test
     paths:
-      - data/training_data.csv
       - scripts/**
 jobs:
   build:
