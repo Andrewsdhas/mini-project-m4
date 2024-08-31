@@ -47,10 +47,10 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Docker image
-      run: docker build -t your-dockerhub-username/ml-ci-cd-project-fastapi:latest .
+      run: docker build -t andrewdhas/ml-ci-cd-project-fastapi:latest .
 
     - name: Push Docker image
-      run: docker push your-dockerhub-username/ml-ci-cd-project-fastapi:latest
+      run: docker push andrewdhas/ml-ci-cd-project-fastapi:latest
 
   deploy:
     runs-on: ubuntu-latest
