@@ -1,28 +1,30 @@
 from fastapi import FastAPI
+import joblib
+import pandas as pd
 from pydantic import BaseModel
-import pickle
-import numpy as np
 
-# Define the request body
-class PredictionRequest(BaseModel):
-    features: list
-
-# Initialize FastAPI app
 app = FastAPI()
 
-# Load the trained model
-with open('models/trained_model.pkl', 'rb') as f:
-    model = pickle.load(f)
+# Load the model
+model = joblib.load('models/best_model.pkl')
 
-# Define a prediction endpoint
-@app.post("/predict")
-def predict(request: PredictionRequest):
-    # Convert request features to numpy array
-    features = np.array(request.features).reshape(1, -1)
-    
-    # Make prediction
-    prediction = model.predict(features)
-    prediction_label = "malignant" if prediction[0] == 0 else "benign"
-    
-    # Return prediction result
-    return {"prediction": prediction_label}
+# Define the request body
+class PatientData(BaseModel):
+    age: float
+    gender: str
+    bmi: float
+    hypertension: int
+    heart_disease: int
+    smoking_history: str
+    HbA1c_level: float
+    blood_glucose_level: float
+
+# Define the prediction endpoint
+@app.post('/predict')
+def predict(data: PatientData):
+    """Predicts if patient has diabetes or not from patient data
+        Gender - Male, Female, Other
+        Smoking_history - No Info, current, never, former"""
+    df = pd.DataFrame([data.dict()])
+    prediction = model.predict(df)
+    return {'diabetes_status': int(prediction[0])}
